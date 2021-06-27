@@ -1,0 +1,64 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Checkout{% endblock title %}
+{% block main-content %}
+<div class="container">
+ <div class="row mt-5">
+  <div class="col-sm-6">
+    <h4>Order Summary</h4>
+    <hr>
+    {% for item in cart_items %}
+      <div class="card mb-2">
+        <div class="card-body">
+          <h5>Product: {{item.product.title|upper}}</h5> 
+          <h6 class=" text-bold" >QUANTITY: {{item.quantity}}</p>
+          <p class="fw-bold">Price: {{item.total_cost}}</p>
+          
+        </div>
+      </div>
+    {% endfor %}
+    <hr>
+    <h4 class=" ar alert-danger"> Total cost + Rs. 70.0  = {{totalcost}} </h4>
+    <small><ul>
+      <li>Bank Offer 5% Unlimited Cashback on Flipkart Axis Bank Credit</li>
+      <li>Special Price Get extra ₹3000 off (price inclusive of discount)</li>
+      <li>No cost EMI ₹1,667/month. Standard EMI also available</li>
+      <li>Partner Offer ₹2000 Flipkart Gift Card on Every 1000th Transaction with a new Visa Debit/Credit Card</li>
+     </ul></small>
+  </div>
+
+
+
+
+  <div class="col-sm-4 offset-sm-1">
+    <h4>Select Shipping Address</h4>
+    <hr>
+    <form action="/paymentdone">
+    {% for ad in add %}
+      <div class="card">
+        <div class="card-body">
+          <h3>Address: {{ forloop.counter }}</h3>
+          <p>Name: {{ad.name}}</p>
+          <p>Locality: {{ad.locality}}</p>
+          <p>City: {{ad.city}}</p>
+          <p>State: {{ad.state}}</p>
+          <p>Pin Code: {{ad.zipcode}}</p>
+         </div>
+      </div>
+        <div class="form-check mt-2 mb-5">
+          <input class="form-check-input" type="radio" name="custid" id="custadd{{forloop.counter}}" value="{{ad.id}}">
+          <label class="form-check-label fw-bold" for="custadd{{forloop.counter}}">
+            Address: {{ forloop.counter }} </label>
+        </div>
+      {% endfor %}
+
+
+
+        <div class="text-end">
+          <button type="submit" class="btn btn-warning mt-3 px-5 fw-bold">Continue</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock main-content %}
